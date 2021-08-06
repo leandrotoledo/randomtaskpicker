@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { get } from "svelte/store";
   import { tasks } from "./store";
 
   import Task from "./components/Task.svelte";
@@ -27,7 +26,7 @@
   }
 
   function removeTask(index: number) {
-    let storedTasks: TaskType[] = get(tasks);
+    let storedTasks: TaskType[] = $tasks;
     storedTasks.splice(index, 1);
 
     tasks.set(storedTasks);
@@ -41,7 +40,7 @@
   }
 
   function pickATask() {
-    let storedTasks: TaskType[] = get(tasks);
+    let storedTasks: TaskType[] = $tasks;
     if (!storedTasks.length) {
       error = "You gotta add a few tasks first, you know?";
       return;
@@ -136,13 +135,13 @@
     <span class="p-2">
       <button
         class="button rounded-full py-2 px-3 uppercase text-xs font-bold tracking-wider border-2"
-        on:keydown|preventDefault
+        on:keydown|preventDefault|trusted
         on:click={pickATask}>Pick a task!</button
       >
 
       <button
         class="button rounded-full py-2 px-3 uppercase text-xs font-bold tracking-wider border-2"
-        on:keydown|preventDefault
+        on:keydown|preventDefault|trusted
         on:click={resetTasks}>Reset</button
       >
     </span>
